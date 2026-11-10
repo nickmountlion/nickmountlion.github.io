@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Odoo Shield Warden | Product case study</title>
+<meta name="description" content="Product case study: a controls engine for Odoo 18 and 19 that holds risky vendor payments, groups fraud alerts into money-at-risk cases and seals evidence in a SHA-256 chain. 14 of 14 lab attack scenarios detected.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://nickmountlion.github.io/odoo-shield-warden/">
+<meta property="og:image" content="https://nickmountlion.github.io/odoo-shield-warden/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta property="og:image:alt" content="Odoo Shield Warden: money-at-risk controls for Odoo">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:title" content="Odoo Shield Warden: money-at-risk controls for Odoo">
+<meta property="og:description" content="Product case study: a controls engine for Odoo 18 and 19 that holds risky vendor payments, groups fraud alerts into money-at-risk cases and seals evidence in a SHA-256 chain. 14 of 14 lab attack scenarios detected.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--bg:#f6f7f4;--surface:#ffffff;--fg:#17211f;--muted:#5b6865;--line:#d9dfdb;--accent:#0f5c4d;--crit:#b3402a;--warn:#c58a1b;--ok:#2f7d5b;--on-rate:#ffffff;--on-warn:#1f1700;
+--display:'Bricolage Grotesque','Segoe UI',sans-serif;--body:'IBM Plex Sans','Segoe UI',sans-serif;--mono:'IBM Plex Mono',Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1715;--surface:#16211e;--fg:#e6ece9;--muted:#9aaaa5;--line:#2a3a36;--accent:#5fc2a8;--crit:#e47a63;--warn:#e0b050;--ok:#64c298;--on-rate:#0f1715;--on-warn:#0f1715;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 var(--body);padding-block:40px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:920px;margin:0 auto;display:grid;gap:48px}
+h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,6vw,3rem);font-weight:700}
+h2{font-size:1.5rem}h3{font-size:1.05rem}
+.eyebrow,.k{font:500 .75rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+p{margin:0;max-width:65ch}
+header,section{display:grid;gap:14px;min-width:0}
+.lede{font-size:1.15rem;color:var(--muted)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.facts div{background:var(--surface);padding:14px;display:grid;gap:4px}
+.facts b{font:700 1.5rem var(--display);font-variant-numeric:tabular-nums}
+.bar{display:flex;height:34px;border-radius:3px;overflow:hidden;font:500 .85rem var(--mono);color:var(--on-rate)}
+.bar span{display:grid;place-items:center;min-width:0}
+.c{background:var(--crit)}.w{background:var(--warn);color:var(--on-warn)}.o{background:var(--ok)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--muted);font-size:.9rem}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;background:var(--sw)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.col{background:var(--surface);border:1px solid var(--line);padding:16px;display:grid;gap:8px;align-content:start;min-width:0}
+.col.rate{border-left:4px solid var(--sw)}
+.steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);counter-reset:s}
+.steps li{background:var(--surface);padding:14px;display:grid;gap:6px;align-content:start;counter-increment:s;font-size:.92rem}
+.steps li::before{content:"0" counter(s);font:500 .75rem var(--mono);color:var(--accent)}
+.steps b{font-family:var(--display);font-size:1.05rem}
+.stack{display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
+.stack>div{background:var(--surface);padding:12px 14px;display:grid;grid-template-columns:150px 1fr;gap:6px 14px;align-items:start}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{border:1px solid var(--line);border-radius:3px;padding:2px 8px;font-size:.86rem;background:var(--bg)}
+@media (max-width:560px){.stack>div{grid-template-columns:1fr}}
+.wrap{overflow-x:auto;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:.9rem}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font:500 .72rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+td:first-child{font-weight:500}
+ul{margin:0;padding-left:1.1em;display:grid;gap:4px}
+.fit{border-top:2px solid var(--accent);padding-top:18px}
+small{color:var(--muted)}
+
+a{color:var(--accent)}
+a.col{text-decoration:none;color:inherit;transition:border-color .15s}
+a.col:hover{border-color:var(--accent)}
+a.col .go{color:var(--accent);font:500 .8rem var(--mono)}
+.note{border-left:3px solid var(--accent);padding:10px 14px;background:var(--surface);color:var(--muted);font-size:.95rem}
+footer{border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:.9rem;display:flex;flex-wrap:wrap;gap:6px 18px}
+</style>
+</head>
+<body>
+<main>
+<header>
+<span class="eyebrow">Case study · Product engineering</span>
+<h1>Odoo Shield Warden: money-at-risk controls for Odoo</h1>
+<p class="lede">ERP security is usually a checklist. Fraud is money leaving. I designed and built a controls engine for Odoo that stops risky vendor payments before they go out, puts a money figure on what was exposed, and keeps evidence an administrator cannot quietly rewrite.</p>
+<small>Designed and built by Facundo Montefalcone. Portfolio edition.</small>
+</header>
+<div class="facts"><div><b>14/14</b><span class="k">Lab attack scenarios detected, up from 3/14</span></div><div><b>60/60</b><span class="k">Automated tests passing on Odoo 18 and 19</span></div><div><b>22/22</b><span class="k">End-to-end scenarios in the regression loop</span></div><div><b>15 to 5</b><span class="k">Alerts correlated into cases</span></div><div><b>6</b><span class="k">Logic bugs the lab exposed and I fixed</span></div><div><b>3</b><span class="k">Frameworks mapped: ISO 27001, SOC 2, CIS v8</span></div></div><section><h2>The problem</h2><p>Companies running Odoo protect accounts payable with role-based groups and the record chatter log. That leaves three blind spots.</p><div class="cols"><div class="col"><h3>The audit trail can be switched off</h3><p>A caller with write access can change a vendor bank account while passing a context flag that disables change tracking. The payment run then pays the wrong account and the log shows nothing.</p></div><div class="col"><h3>Checklists do not measure money</h3><p>A hardening checklist says a setting is wrong. It does not say which payments were exposed or how much they were worth.</p></div><div class="col"><h3>Evidence can be edited</h3><p>An assessment stored as ordinary records can be rewritten by the same administrator it is meant to check.</p></div></div></section><section><h2>What it does</h2><div class="cols"><div class="col"><h3>Security and GRC controls</h3><p>Continuous assessment mapped to ISO 27001, SOC 2 and CIS Controls v8: MFA coverage, login throttling, default admin checks, database manager exposure, weak database credentials, mass exports.</p></div><div class="col"><h3>Anti-forensics monitors</h3><p>Detects code stored in the database, custom record rules that hide data from auditors, and privilege drift against a sealed baseline.</p></div><div class="col"><h3>Preventive payment hold</h3><p>Payments to a new or recently changed vendor bank account are intercepted and need a second person to verify before funds are released.</p></div><div class="col"><h3>Transaction monitoring</h3><p>Rules for untracked bank swaps, bank accounts shared between vendors and staff, self-approved bills, duplicate vendor bills and rapid payouts to new vendors.</p></div><div class="col"><h3>Money-at-risk cases</h3><p>Related alerts are grouped into one investigation case per payment with a money total and a return-on-security-investment view.</p></div><div class="col"><h3>Tamper-evident evidence</h3><p>Every assessment and attestation is linked into a SHA-256 hash chain, with optional off-box seal receipts and an executive PDF scorecard.</p></div></div></section><section><h2>Architecture</h2><div class="stack"><div><span class="k">Core addon</span><div class="chips"><span>Automated controls</span><span>Anti-forensic monitors</span><span>Third-party addon scanner</span><span>Risk register</span><span>One-click hardening</span><span>Evidence chain</span><span>PDF scorecard</span></div></div><div><span class="k">Finance addon</span><div class="chips"><span>Two-person payment hold</span><span>Toxic privilege detection</span><span>Transaction fraud rules</span><span>Case aggregation</span><span>ROSI view</span></div></div><div><span class="k">Scanner</span><div class="chips"><span>Standalone host and external inspection</span><span>For instances where addons cannot be installed</span></div></div><div><span class="k">Lab</span><div class="chips"><span>Adversarial fraud benchmark</span><span>Synthetic data only</span><span>Refuses non-localhost targets</span></div></div><div><span class="k">Tools</span><div class="chips"><span>Fraud scenario seeding</span><span>Assessment runner</span><span>Scorecard export</span></div></div><div><span class="k">Dev stack</span><div class="chips"><span>Docker Compose</span><span>Odoo 18</span><span>PostgreSQL</span></div></div></div><p>Everything runs inside the Odoo instance through the ORM and the accounting module. There is no external agent to deploy.</p></section><section><h2>How I proved it works</h2><p>I wrote an attack lab that plays the fraudster and the insider against a local instance: bank swaps with tracking disabled, dormant server actions, record rules that blind an auditor, quiet privilege escalation. Then I ran review cycles until detection stopped missing.</p><div class="wrap"><table><thead><tr><th>Measure</th><th>First version</th><th>Current</th></tr></thead><tbody><tr><td>Lab attack scenarios detected</td><td>3 of 14</td><td>14 of 14</td></tr><tr><td>Logic bugs found by the lab in the controls engine</td><td>Unknown</td><td>6 found and fixed</td></tr><tr><td>Automated tests, Odoo 18</td><td>Not ported</td><td>60 of 60</td></tr><tr><td>Automated tests, Odoo 19</td><td>Not ported</td><td>60 of 60, ported by patch</td></tr><tr><td>End-to-end regression loop</td><td>None</td><td>22 of 22 scenarios, 2 prevention checks</td></tr><tr><td>Alert correlation in the demo dataset</td><td>15 separate alerts</td><td>5 cases with one money total</td></tr></tbody></table></div><p>Odoo 17 is documented as not supported: the module installs after view backports but 14 finance tests fail. I would rather publish the boundary than hide it.</p></section><section><h2>Design decisions</h2><div class="cols"><div class="col"><h3>Prevent, then detect</h3><p>A hold on the payment beats an alert after the money left. Detection covers what the hold cannot see.</p></div><div class="col"><h3>Cases, not alerts</h3><p>One fraudulent payment trips two or three rules. Grouping by payment gives an investigator one case and one number.</p></div><div class="col"><h3>Independent fingerprints</h3><p>Bank details are hashed separately from the chatter log, so a swap with tracking disabled still shows as a mismatch.</p></div><div class="col"><h3>Known limits, written down</h3><p>Bank aliases re-pointed outside Odoo are invisible to ERP-layer controls. The documentation says so and recommends paying by account number.</p></div></div></section><section><h2>Stack</h2><div class="stack"><div><span class="k">Platform</span><div class="chips"><span>Odoo 18</span><span>Odoo 19</span><span>PostgreSQL</span></div></div><div><span class="k">Code</span><div class="chips"><span>Python</span><span>Odoo ORM</span><span>XML views</span><span>QWeb PDF</span></div></div><div><span class="k">Runtime</span><div class="chips"><span>Docker Compose</span><span>Linux</span></div></div><div><span class="k">Localization</span><div class="chips"><span>IBAN</span><span>Argentine CBU and CVU</span></div></div><div><span class="k">Frameworks</span><div class="chips"><span>ISO 27001</span><span>SOC 2</span><span>CIS Controls v8</span></div></div></div><small>Portfolio edition. Source is available for review on request. All lab and demo data is synthetic.</small></section>
+<footer><span>Built by Facundo "Nick" Montefalcone</span><a href="../">Portfolio</a><a href="https://github.com/nickmountlion">GitHub</a></footer>
+</main>
+</body>
+</html>
